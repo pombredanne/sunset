@@ -24,18 +24,26 @@ if ENABLE_HACK:
 
 ## Scanner examples
 
-### 1. Scan a files or directories
+Scan an individual filefiles in directories
 
 ```bash
 $ sunset scan file1.py
 ALERT    file1.py:100-123   expired 3 days ago
 WARNING  file1.py:128       expires in 5 days
+```
 
+Scan a directory
+
+```bash
 $ sunset scan .
 ALERT    file1.py:100-123   expired 3 days ago
 WARNING  file2.py:10-12     expires in 3 days
 WARNING  file1.py:128       expires in 5 days
+```
 
+Scan a directory recursively
+
+```bash
 $ sunset scan -R .
 ALERT    file1.py:100-123   expired 3 days ago
 ALERT    lib/file1.py:11    expired 1 day ago
@@ -43,13 +51,25 @@ WARNING  file2.py:10-12     expires in 3 days
 WARNING  file1.py:128       expires in 5 days
 ```
 
-### 2. Filter scans
+Show only alerts
 
 ```bash
 $ sunset scan -R --only=ALERT .
 ALERT    file1.py:100-123   expired 3 days ago
+```
 
+Show only items within 3 days from now
+
+```bash
 $ sunset scan -R --within=3d .
 ALERT    file1.py:100-123   expired 3 days ago
 WARNING  file2.py:10-12     expires in 3 days
+```
+
+Output as CSV
+
+```bash
+$ sunset scan --output=csv file1.py
+ALERT,file1.py,100-123,-3
+WARNING,file1.py,128,5
 ```
