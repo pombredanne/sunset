@@ -26,7 +26,7 @@ class Marker(object):
 class Parser(object):
     re_sunset_begin = re.compile(
         r'>>SUNSET'
-        r'\s+(?P<date>([1-9][0-9]{3})-(0?[1-9]|1[1-2])-([0-2]?[1-9]|3[0-1]))\s*'
+        r'\s+(?P<date>([1-9][0-9]{3})-(1[1-2]|0?[1-9])-([1-2][0-9]|3[0-1]|0?[1-9]))\s*'
         r'(?P<end><<)?')
 
     re_sunset_end = re.compile(r'<<SUNSET')
@@ -45,6 +45,7 @@ class Parser(object):
             groupdict = match.groupdict()
 
             self._open_marker = Marker(lineno)
+            print groupdict['date'].split('-')
             self._open_marker.expires = datetime.date(*map(int, groupdict['date'].split('-')))
             if groupdict['end']:
                 self.markers.append(self._open_marker)

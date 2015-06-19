@@ -30,12 +30,10 @@ class ScanLog(object):
 
     def delta_as_str(self, delta, friendly=True):
         if friendly:
-            days = 'days' if delta != 1 else 'day'
-
             if delta < 0:
-                return 'expired {0} {1} ago'.format(delta, abs(days))
+                return 'expired yesterday' if delta == -1 else 'expired {0} days ago'.format(abs(delta))
             elif delta > 0:
-                return 'expires in {0} {1}'.format(delta, days)
+                return 'expires tomorrow' if delta == 1 else 'expires in {0} days'.format(delta)
             else:
                 return 'expired today'
         else:
