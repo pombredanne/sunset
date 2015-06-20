@@ -144,4 +144,7 @@ class ScanTool(object):
         if args.files:
             tool.targets = list(args.files)
 
+        if args.output:
+            tool.scanlog.output_mode = args.output
+
         return tool
