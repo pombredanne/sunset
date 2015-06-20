@@ -8,7 +8,13 @@ setup(
     packages=['sunset'],
     author='Jimmy Shen',
     author_email='thejimmyshen@gmail.com',
-    description='Use comments to add expiration dates to your code.',
+    description=(
+        'Have you ever added a hack that you told yourself '
+        'you would remember to get rid of later on but it eventually '
+        'becomes a permanent fixture of the codebase? '
+        'With Sunset, simply annotate your code with special comments '
+        'and the scanner will alert you when time has come to clean '
+        'up your code!'),
     license='MIT',
     entry_points={'console_scripts': ['sunset = sunset.bin:main']},
     install_requires=[],

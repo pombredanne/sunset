@@ -1,6 +1,7 @@
-Have you ever added a hack that you told yourself you would remember to get rid of later on?
-Sunset is a tool to help you remember -- all you have to do is wrap your code with special
-comments and have Sunset run automatically as part of your automated code quality processes :)
+Have you ever added a hack that you told yourself you would remember to get rid of later on
+but it eventually becomes a permanent fixture of the codebase? With Sunset, simply annotate
+your code with special comments and the scanner will alert you when time has come to clean
+up your code!
 
 Currently, Sunset is in pre-release development and only supports scanning Python source code.
 
@@ -24,7 +25,7 @@ if ENABLE_HACK:
 
 ## Scanner examples
 
-Scan an individual filefiles in directories
+Scan an individual files
 
 ```bash
 $ sunset scan file1.py
