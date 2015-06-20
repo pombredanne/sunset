@@ -17,7 +17,6 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Topic :: Software Development :: Build Tools',
-        'Topic :: Software Development :: Libraries',
         'Programming Language :: Python :: 2.7',
         'License :: OSI Approved :: MIT License'
     ]
