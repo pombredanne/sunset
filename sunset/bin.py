@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 import logging
 import argparse
@@ -12,7 +10,7 @@ def scan(args):
     sys.exit(scanner.scanlog.get_message_count('ALERT'))
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(prog='sunset')
     parser.add_argument('--debug', action='store_true', help='Enable debug output')
 

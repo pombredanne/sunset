@@ -10,8 +10,8 @@ setup(
     author_email='thejimmyshen@gmail.com',
     description='Use comments to add expiration dates to your code.',
     license='MIT',
-    install_requires=[
-    ],
+    entry_points={'console_scripts': ['sunset = sunset.bin:main']},
+    install_requires=[],
     url='https://github.com/jimmyshen/sunset',
     download_url='https://github.com/jimmyshen/sunset/tarball/0.1',
     classifiers=[
