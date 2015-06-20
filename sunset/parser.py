@@ -1,6 +1,8 @@
-import sys
 import re
 import datetime
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class Marker(object):
@@ -27,7 +29,7 @@ class Parser(object):
     re_sunset_begin = re.compile(
         r'>>SUNSET'
         r'\s+(?P<date>([1-9][0-9]{3})-(1[1-2]|0?[1-9])-([1-2][0-9]|3[0-1]|0?[1-9]))\s*'
-        r'(?P<end><<)?')
+        r'(?P<end><<)?\s*$')
 
     re_sunset_end = re.compile(r'<<SUNSET')
 
@@ -39,7 +41,7 @@ class Parser(object):
         match = self.re_sunset_begin.search(comment)
         if match:
             if self._open_marker:
-                print >>sys.stderr, 'Unmatched marker start at line', self._open_marker.line_start
+                log.warn('Unmatched marker start at line %d', self._open_marker.line_start)
                 self.markers.append(self._open_marker)
 
             groupdict = match.groupdict()
@@ -62,9 +64,7 @@ class Parser(object):
                 self.markers.append(self._open_marker)
                 self._open_marker = None
             else:
-                print >>sys.stderr, 'Dangling marker end at line', lineno
-                # TODO log syntax warning
-                pass
+                log.warn('Dangling marker end at line %d', lineno)
 
     def parse(self, lineno, comment):
         if not self.parse_begin(lineno, comment):

@@ -5,6 +5,8 @@ log = logging.getLogger(__name__)
 
 
 class Scanner(object):
+    __metaclass__ = abc.ABCMeta
+
     @abc.abstractmethod
     def match_filetype(self, filetype):
         # subclass must implement logic to determine whether scanner supports a file type

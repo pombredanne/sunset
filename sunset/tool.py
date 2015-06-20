@@ -50,12 +50,12 @@ class ScanLog(object):
 
         fileinfo = '{0}:{1}'.format(
             os.path.basename(filename),
-            str(lines) if isinstance(lines, int) else '{0}-{1}'.format(*lines))
+            lines[0] if lines[0] == lines[1] else '{0}-{1}'.format(*lines))
 
         if self.output_mode == 'CSV':
             print ','.join(map(str, [level, fileinfo, self.delta_as_str(delta, friendly=False)]))
         else:
-            print level, fileinfo, self.delta_as_str(delta)
+            print '%-16s %-32s %s' % (level, fileinfo, self.delta_as_str(delta))
 
     def get_message_count(self, level=None):
         if level is None:
@@ -86,7 +86,7 @@ class ScanTool(object):
         while items:
             item = items.pop()
             if os.path.isfile(item):
-                yield item
+                yield os.path.abspath(item)
             elif os.path.isdir(item):
                 for entry in os.listdir(item):
                     entry = os.path.abspath(os.path.join(item, entry))
