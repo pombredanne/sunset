@@ -45,7 +45,6 @@ class Parser(object):
             groupdict = match.groupdict()
 
             self._open_marker = Marker(lineno)
-            print groupdict['date'].split('-')
             self._open_marker.expires = datetime.date(*map(int, groupdict['date'].split('-')))
             if groupdict['end']:
                 self.markers.append(self._open_marker)

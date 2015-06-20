@@ -80,29 +80,22 @@ class ScanTool(object):
         self.recursive = None
         self.scanlog = scanlog
 
-    def _scan_files(self):
-        dirs = list(self.targets)
+    def scan_files(self):
+        items = list(self.targets)
 
-        while dirs:
-            working_dir = dirs.pop()
-            for entry in os.listdir(working_dir):
-                entry = os.path.abspath(os.path.join(working_dir, entry))
-                if os.path.isfile(entry):
-                    yield entry
-                elif os.path.isdir(entry) and self.recursive:
-                    dirs.append(entry)
+        while items:
+            item = items.pop()
+            if os.path.isfile(item):
+                yield item
+            elif os.path.isdir(item):
+                for entry in os.listdir(item):
+                    entry = os.path.abspath(os.path.join(item, entry))
+                    if os.path.isfile(entry):
+                        yield entry
+                    elif os.path.isdir(entry) and self.recursive:
+                        items.append(entry)
 
-    def _find_scanners(self, file_ext):
-        scanners = []
-
-        for scannercls in Scanner.__subclasses__():
-            scanner = scannercls()
-            if scanner.match_filetype(file_ext):
-                scanners.append(scanner)
-
-        return scanners
-
-    def _check_markers(self, filename, markers):
+    def check_markers(self, filename, markers):
         for marker in markers:
             delta = (marker.expires - self.today).days
             if delta <= 0:
@@ -111,10 +104,10 @@ class ScanTool(object):
                 self.scanlog.warn(filename, (marker.line_start, marker.line_end), delta)
 
     def start_scan(self):
-        for filename in self._scan_files():
+        for filename in self.scan_files():
             match = self.re_file_ext.search(os.path.basename(filename))
             if match:
-                for scanner in self._find_scanners(match.groups()[0]):
+                for scanner in Scanner.find_by_filetype(match.groups()[0]):
                     log.debug('Processing file %s with scanner %s', filename, scanner.__class__.__name__)
                     parser = Parser()
 
@@ -124,7 +117,7 @@ class ScanTool(object):
                     if parser.markers:
                         log.debug('...found %d markers', len(parser.markers))
 
-                    self._check_markers(filename, parser.markers)
+                    self.check_markers(filename, parser.markers)
 
     @classmethod
     def config_from_args(cls, args):

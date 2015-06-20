@@ -15,3 +15,16 @@ class Scanner(object):
         # subclass must implement extraction of comments from source
         # and pass them to the provided parser (see sunset.parser module).
         raise NotImplementedError()
+
+    @classmethod
+    def find_by_filetype(cls, filetype):
+        scanners = []
+
+        for scannercls in cls.__subclasses__():
+            scanner = scannercls()
+            if scanner.match_filetype(filetype):
+                scanners.append(scanner)
+
+        return scanners
+
+
