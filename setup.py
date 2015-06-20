@@ -34,7 +34,7 @@ class PyTest(TestCommand):
 
 setup(
     name='sunset',
-    version='0.1',
+    version='0.1.1',
     packages=['sunset'],
     author='Jimmy Shen',
     author_email='thejimmyshen@gmail.com',
@@ -49,7 +49,7 @@ setup(
     entry_points={'console_scripts': ['sunset = sunset.bin:main']},
     install_requires=['pytest', 'pytest-cov', 'mock'],
     url='https://github.com/jimmyshen/sunset',
-    download_url='https://github.com/jimmyshen/sunset/tarball/0.1',
+    download_url='https://github.com/jimmyshen/sunset/tarball/0.1.1',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Topic :: Software Development :: Build Tools',
